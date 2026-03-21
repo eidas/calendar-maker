@@ -107,19 +107,22 @@
 ## T07 コンポーネント — カレンダー表示
 
 - [ ] **T07-1** `src/components/CalendarPreview.jsx` を作成する
-  - `ref` を付けて PNG 出力の対象 DOM にする
+  - 内部に `calendarRef`（`useRef`）を持ち、カレンダーグリッド部分のラッパー `<div>` に付ける
+  - `calendarRef` を `DownloadButton` に props として渡す（ボタン自体は `ref` 対象 DOM の外に置き、PNG に写り込まないようにする）
   - `theme` のスタイルをインラインスタイルで適用（背景優先順位: 画像 > グラデーション > 単色）
-  - `CalendarGrid` と `DownloadButton` を内包
+  - `CalendarGrid` を `ref` 対象内に、`DownloadButton` を `ref` 対象外（下部）に配置
 - [ ] **T07-2** `src/components/CalendarGrid.jsx` を作成する
   - 年月ヘッダー（例: `2026年3月`）を表示
   - 曜日ヘッダー行（日〜土）を表示。日曜は `sundayColor`, 土曜は `saturdayColor`
   - `getDaysInMonth` で 42 マスを生成し `CalendarCell` を配置
 - [ ] **T07-3** `src/components/CalendarCell.jsx` を作成する
-  - props: `date`, `isCurrentMonth`, `isToday`, `holiday`, `events`, `theme`, `onClick`
+  - props: `date`, `isCurrentMonth`, `isToday`, `holiday`, `events`, `theme`, `onClick`, `onEventClick`
   - 日付番号の色: 前月・翌月はグレー、当月は `textColor`、土曜は `saturdayColor`、日曜/祝日は `holidayColor`
   - 祝日名を小テキストで表示（`holidayColor`）
   - イベントを最大 3 件表示（テキスト名 + 画像サムネイル）
-  - クリックで `onClick(date)` を呼ぶ
+    - タイトルが空（画像のみイベント）の場合はテキスト部分を省略し、サムネイルのみ表示
+  - セル空白部分のクリック → `onClick(date)` を呼ぶ（新規追加ダイアログを開く）
+  - イベント要素のクリック → `onEventClick(event)` を呼ぶ（編集/削除ダイアログを開く）。イベントバブリングは `stopPropagation()` で止める
 
 ---
 
@@ -142,6 +145,7 @@
 ## T09 PNG 出力
 
 - [ ] **T09-1** `src/components/DownloadButton.jsx` を作成する
+  - props: `calendarRef`（PNG出力対象の DOM ref）、`year`、`month`
   - 「PNG ダウンロード」ボタン
   - クリックで `downloadCalendarPng(calendarRef.current, \`calendar-${year}-${month}.png\`)` を呼ぶ
   - 生成中は「生成中...」と表示し、ボタンを無効化
@@ -155,10 +159,15 @@
   - ポップ: 水色背景, カラフルなヘッダー, 丸みセル（`border-radius`）
   - ダーク: `#1a1a2e` 背景, 白文字, `#444` グリッド線
   - 和風: `#fdf6ec` 背景, 朱（`#c0392b`）・藍（`#2c4770`）・抹茶（`#4a7c59`）を使用
-- [ ] **T10-2** カレンダー全体のレイアウトを確認する
+- [ ] **T10-2** リアルタイムプレビューの動作を確認する
+  - テンプレート切り替えが即座にプレビューに反映されること
+  - 背景色・グラデーション・画像の変更が即座に反映されること
+  - フォント・文字色の変更が即座に反映されること
+  - イベント追加・編集・削除が即座に反映されること
+- [ ] **T10-3** カレンダー全体のレイアウトを確認する
   - 左右並び（幅 1024px 以上）/ 上下並び（幅 1024px 未満）
   - 設定パネルはスクロール可能（`overflow-y-auto`）
-- [ ] **T10-3** PNG 出力の画質を確認する
+- [ ] **T10-4** PNG 出力の画質を確認する
   - `pixelRatio: 2` で高解像度出力されること
   - フォントが正しく埋め込まれること
   - 背景画像・グラデーションが出力に反映されること
@@ -168,10 +177,15 @@
 ## タスク依存関係
 
 ```
-T01 → T02 → T03 → T04 → T05 → T06, T07, T08, T09 → T10
-             ↑                    ↑
-         (holidays は T07 で使用) (dateUtils は T04,T07 で使用)
+T01 ─┬→ T02 ─┐
+     └→ T03 ─┴→ T04 → T05 ─┬→ T06 ─┐
+                              ├→ T07 ─┤→ T10
+                              ├→ T08 ─┤
+                              └→ T09 ─┘
 ```
+
+- T02 と T03 は T01 完了後に並列着手可
+- T06〜T09 は T05 完了後に並列着手可
 
 | タスク | 前提タスク |
 |--------|-----------|
@@ -184,3 +198,5 @@ T01 → T02 → T03 → T04 → T05 → T06, T07, T08, T09 → T10
 | T08 | T04, T05 |
 | T09 | T03, T05 |
 | T10 | T06, T07, T08, T09 |
+
+
