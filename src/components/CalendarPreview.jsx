@@ -24,11 +24,12 @@ export default function CalendarPreview({ calendar, eventsApi, onCellClick, onEv
   return (
     <div className="flex flex-col gap-4 mx-4 my-2">
       {/* PNG に含まれる部分 */}
-      <div
-        ref={calendarRef}
-        className="rounded-lg overflow-hidden shadow"
-        style={{ ...buildBackgroundStyle(theme), fontFamily: theme.fontFamily }}
-      >
+      <div className="p-2">
+        <div
+          ref={calendarRef}
+          className="rounded-lg overflow-hidden shadow"
+          style={{ ...buildBackgroundStyle(theme), fontFamily: theme.fontFamily }}
+        >
         <CalendarGrid
           year={year}
           month={month}
@@ -37,6 +38,7 @@ export default function CalendarPreview({ calendar, eventsApi, onCellClick, onEv
           onCellClick={onCellClick}
           onEventClick={onEventClick}
         />
+        </div>
       </div>
 
       {/* PNG に含まれない部分 */}
