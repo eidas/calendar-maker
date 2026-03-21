@@ -81,23 +81,23 @@
 
 ## T06 コンポーネント — 設定パネル
 
-- [ ] **T06-1** 年月選択セクションを `SettingsPanel.jsx` に実装する
+- [x] **T06-1** 年月選択セクションを `SettingsPanel.jsx` に実装する
   - 年: `<input type="number">` または `<select>`
   - 月: `<select>`（1〜12 月）
   - 前月 / 翌月ボタン（`useCalendar` の `prevMonth` / `nextMonth` を呼ぶ）
-- [ ] **T06-2** テンプレート選択セクションを実装する
+- [x] **T06-2** テンプレート選択セクションを実装する
   - 4 ボタン（シンプル / ポップ / ダーク / 和風）
   - 現在選択中のテンプレートをアクティブスタイルで強調
-- [ ] **T06-3** 背景設定セクションを実装する
+- [x] **T06-3** 背景設定セクションを実装する
   - タブまたはラジオで「単色 / グラデーション / 画像」を排他選択
   - 単色: `<input type="color">` → `updateTheme({ backgroundColor })`
   - グラデーション: 開始色・終了色・方向（select）→ `updateTheme({ backgroundGradient })`
   - 画像: `<input type="file" accept="image/*">` → `fileToBase64` でBase64化 → `updateTheme({ backgroundImage })`
   - 画像をクリアするボタンを設置
-- [ ] **T06-4** フォント選択セクションを実装する
+- [x] **T06-4** フォント選択セクションを実装する
   - `<select>` でフォントファミリーを切り替え（Noto Sans JP, Noto Serif JP, M PLUS Rounded 1c, Zen Kurenaido, sans-serif）
   - 選択肢のラベル自体に該当フォントを適用してプレビュー
-- [ ] **T06-5** 文字色設定セクションを実装する
+- [x] **T06-5** 文字色設定セクションを実装する
   - 通常日: `<input type="color">` → `updateTheme({ textColor })`
   - 土曜日: `<input type="color">` → `updateTheme({ saturdayColor })`
   - 日曜・祝日: `<input type="color">` → `updateTheme({ sundayColor, holidayColor }`（連動）
@@ -106,16 +106,16 @@
 
 ## T07 コンポーネント — カレンダー表示
 
-- [ ] **T07-1** `src/components/CalendarPreview.jsx` を作成する
+- [x] **T07-1** `src/components/CalendarPreview.jsx` を作成する
   - 内部に `calendarRef`（`useRef`）を持ち、カレンダーグリッド部分のラッパー `<div>` に付ける
   - `calendarRef` を `DownloadButton` に props として渡す（ボタン自体は `ref` 対象 DOM の外に置き、PNG に写り込まないようにする）
   - `theme` のスタイルをインラインスタイルで適用（背景優先順位: 画像 > グラデーション > 単色）
   - `CalendarGrid` を `ref` 対象内に、`DownloadButton` を `ref` 対象外（下部）に配置
-- [ ] **T07-2** `src/components/CalendarGrid.jsx` を作成する
+- [x] **T07-2** `src/components/CalendarGrid.jsx` を作成する
   - 年月ヘッダー（例: `2026年3月`）を表示
   - 曜日ヘッダー行（日〜土）を表示。日曜は `sundayColor`, 土曜は `saturdayColor`
   - `getDaysInMonth` で 42 マスを生成し `CalendarCell` を配置
-- [ ] **T07-3** `src/components/CalendarCell.jsx` を作成する
+- [x] **T07-3** `src/components/CalendarCell.jsx` を作成する
   - props: `date`, `isCurrentMonth`, `isToday`, `holiday`, `events`, `theme`, `onClick`, `onEventClick`
   - 日付番号の色: 前月・翌月はグレー、当月は `textColor`、土曜は `saturdayColor`、日曜/祝日は `holidayColor`
   - 祝日名を小テキストで表示（`holidayColor`）
@@ -128,14 +128,14 @@
 
 ## T08 コンポーネント — イベント管理
 
-- [ ] **T08-1** `src/components/EventDialog.jsx` を作成する（新規追加モード）
+- [x] **T08-1** `src/components/EventDialog.jsx` を作成する（新規追加モード）
   - 選択日付を表示
   - イベント名テキスト入力（任意）
   - 画像アップロード（任意）、プレビュー表示
   - 保存ボタン: タイトルと画像の両方が空の場合のみ無効化
   - 1日3件上限に達している場合は「上限に達しています」を表示して保存不可
   - キャンセル / 閉じるボタン
-- [ ] **T08-2** `EventDialog.jsx` に編集・削除モードを追加する
+- [x] **T08-2** `EventDialog.jsx` に編集・削除モードを追加する
   - 既存イベントをクリックした場合に編集フォームを表示
   - 削除ボタン（確認なしで即削除）
   - 保存で `updateEvent` を呼ぶ
