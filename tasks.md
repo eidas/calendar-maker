@@ -6,30 +6,30 @@
 
 ## T01 プロジェクト初期化
 
-- [ ] **T01-1** Vite + React プロジェクトを初期化する
+- [x] **T01-1** Vite + React プロジェクトを初期化する
   - `npm create vite@latest . -- --template react`
   - 生成される不要なサンプルファイル（`src/App.css`, `src/assets/`）を削除
-- [ ] **T01-2** Tailwind CSS を導入する
+- [x] **T01-2** Tailwind CSS を導入する
   - `npm install -D tailwindcss postcss autoprefixer`
   - `tailwind.config.js` / `postcss.config.js` を生成・設定
   - `src/index.css` に `@tailwind` ディレクティブを追加
-- [ ] **T01-3** html-to-image を追加する
+- [x] **T01-3** html-to-image を追加する
   - `npm install html-to-image`
-- [ ] **T01-4** Google Fonts を `index.html` に追加する
+- [x] **T01-4** Google Fonts を `index.html` に追加する
   - Noto Sans JP, Noto Serif JP, M PLUS Rounded 1c, Zen Kurenaido（和風用）
 
 ---
 
 ## T02 データ定義
 
-- [ ] **T02-1** `src/data/holidays.js` — 祝日計算ロジックを実装する
+- [x] **T02-1** `src/data/holidays.js` — 祝日計算ロジックを実装する
   - 固定祝日 10件（元日, 建国記念の日, 天皇誕生日, 昭和の日, 憲法記念日, みどりの日, こどもの日, 山の日, 文化の日, 勤労感謝の日）
   - ハッピーマンデー 4件（成人の日, 海の日, 敬老の日, スポーツの日）
   - 春分の日・秋分の日（天文計算近似式）
   - 振替休日（祝日が日曜 → 翌月曜）
   - `export function getHolidays(year)` — `{ "YYYY-MM-DD": "祝日名" }` を返す
   - `export function isHoliday(dateStr)` — boolean を返す
-- [ ] **T02-2** `src/data/themes.js` — 4テンプレートの `ThemeConfig` を定義する
+- [x] **T02-2** `src/data/themes.js` — 4テンプレートの `ThemeConfig` を定義する
   - `simple`: 白背景, 細いグリッド線, モノクロ基調
   - `pop`: 鮮やかな配色, 丸みのあるスタイル
   - `dark`: 暗い背景, 白・グレー文字
@@ -39,11 +39,11 @@
 
 ## T03 ユーティリティ
 
-- [ ] **T03-1** `src/utils/dateUtils.js` を実装する
+- [x] **T03-1** `src/utils/dateUtils.js` を実装する
   - `getDaysInMonth(year, month)` — 前月末・翌月頭を含む 42 マス分の日付配列を返す
   - `formatDate(date)` — `Date` オブジェクト → `"YYYY-MM-DD"` 文字列
   - `getWeekday(year, month, day)` — 曜日インデックス（0=日〜6=土）を返す
-- [ ] **T03-2** `src/utils/imageUtils.js` を実装する
+- [x] **T03-2** `src/utils/imageUtils.js` を実装する
   - `fileToBase64(file)` — `File` → Base64 文字列（Promise）
   - `downloadCalendarPng(element, filename)` — `toPng()` で PNG 保存（`pixelRatio: 2`）
 
