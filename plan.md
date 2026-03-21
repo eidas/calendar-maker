@@ -4,7 +4,7 @@
 
 - **フレームワーク**: React（Vite + JSX）
 - **スタイリング**: Tailwind CSS
-- **PNG出力**: html-to-image
+- **PNG出力**: html-to-image（html2canvas より軽量でフォント埋め込みが容易なため採用。CORSエラーが発生した場合は html2canvas へ差し替え可）
 - **フォント**: Google Fonts（Noto Sans JP, Noto Serif JP, M PLUS Rounded 1c など）
 
 ---
@@ -138,7 +138,7 @@ const [events, setEvents]  // CalendarEvent[]
 
 #### `App.jsx`
 
-- 左右レイアウト（`flex`）
+- レイアウト切り替え対応: 左右並び（デスクトップ）/ 上下並び（ナロー画面）を Tailwind の `lg:flex-row flex-col` で実現
 - `useCalendar` / `useEvents` フックを呼び出し、子コンポーネントへ props として渡す
 - イベントダイアログの表示状態管理（選択日付, 編集対象イベント）
 
@@ -149,9 +149,12 @@ const [events, setEvents]  // CalendarEvent[]
 #### `SettingsPanel.jsx`（左カラム）
 
 サブセクション:
-1. **年月選択** — `<select>` または `<input type="number">` + ボタン
+1. **年月選択** — `<select>` または `<input type="number">` + 前月/翌月ボタン
 2. **テンプレート選択** — 4ボタン、アクティブ強調
-3. **背景設定** — カラーピッカー（`<input type="color">`）+ 画像アップロード（`<input type="file">`）
+3. **背景設定**:
+   - 背景色: カラーピッカー（`<input type="color">`）
+   - 背景グラデーション: 開始色・終了色・方向（`linear-gradient`）を設定。単色と排他選択
+   - 背景画像: ファイルアップロード（`<input type="file" accept="image/*">`）でBase64変換後に設定。背景色/グラデーションより優先
 4. **フォント選択** — `<select>` でフォントファミリー切り替え
 5. **文字色設定** — 通常/土曜/日曜&祝日 それぞれカラーピッカー
 
@@ -180,9 +183,10 @@ props: `date`, `isCurrentMonth`, `isToday`, `holiday`, `events`, `theme`, `onCli
 #### `EventDialog.jsx`
 
 - モーダルダイアログ
-- 入力: イベント名（テキスト）、画像アップロード
+- 入力: イベント名（テキスト、任意）、画像アップロード（任意）
 - 既存イベント選択時: 編集フォーム + 削除ボタン
-- バリデーション: タイトルが空の場合は保存不可
+- バリデーション: **タイトルと画像の両方が空の場合のみ保存不可**（テキストのみ・画像のみ・テキスト＋画像いずれも許可）
+- 1日3件上限に達している場合は追加不可（上限超過メッセージを表示）
 
 #### `DownloadButton.jsx`
 
@@ -225,14 +229,21 @@ async function handleDownload(calendarRef) {
 type CalendarEvent = {
   id: string;
   date: string;        // "YYYY-MM-DD"
-  title: string;
+  title: string;       // 空文字列可（画像のみイベントを許容）
   image?: string;      // Base64
+};
+
+type BackgroundGradient = {
+  startColor: string;
+  endColor: string;
+  direction: string;   // "to right" | "to bottom" | "135deg" など
 };
 
 type ThemeConfig = {
   name: string;
   backgroundColor: string;
-  backgroundImage?: string;
+  backgroundGradient?: BackgroundGradient; // 設定時は backgroundColor より優先
+  backgroundImage?: string;                // Base64。設定時は色/グラデーションより優先
   fontFamily: string;
   textColor: string;
   saturdayColor: string;
@@ -261,5 +272,8 @@ type ThemeConfig = {
 
 - 全処理はクライアントサイドで完結（サーバー不要）
 - 画像はBase64としてReact状態に保持（`localStorage` は使用しない）
-- `html-to-image` はCORSに注意（外部画像はBase64変換必須）
+- `html-to-image` はCORSに注意（外部画像はBase64変換必須）。問題発生時は `html2canvas` に差し替え
 - 振替休日の計算は国民の祝日に関する法律に基づく
+- 背景の優先順位: `backgroundImage` > `backgroundGradient` > `backgroundColor`
+- イベントはタイトルと画像の両方が空でなければ保存可（画像のみイベントを許容）
+- `CalendarEvent.title` は空文字列を許容するが、表示時は省略処理する
