@@ -36,7 +36,7 @@ export default function CalendarGrid({ year, month, theme, eventsApi, onCellClic
       </div>
 
       {/* カレンダーグリッド */}
-      <div className="grid grid-cols-7 border-t border-l" style={{ borderColor: theme.gridColor }}>
+      <div className="grid grid-cols-7">
         {cells.map((cell, idx) => {
           const dateStr = toDateStr(cell.year, cell.month, cell.day)
           const holiday = holidays[dateStr]
@@ -50,6 +50,7 @@ export default function CalendarGrid({ year, month, theme, eventsApi, onCellClic
               holiday={holiday}
               events={events}
               theme={theme}
+              isFirstRow={idx < 7}
               onClick={onCellClick}
               onEventClick={onEventClick}
             />
