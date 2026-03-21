@@ -51,12 +51,12 @@
 
 ## T04 カスタムフック
 
-- [ ] **T04-1** `src/hooks/useCalendar.js` を実装する
+- [x] **T04-1** `src/hooks/useCalendar.js` を実装する
   - 状態: `year`, `month`, `theme`（ThemeConfig）
   - `prevMonth()` / `nextMonth()` — 月をまたぐ場合は年も更新
   - `applyTemplate(key)` — `themes.js` から ThemeConfig を取得してセット
   - `updateTheme(patch)` — 部分更新（背景色・フォントなど個別変更用）
-- [ ] **T04-2** `src/hooks/useEvents.js` を実装する
+- [x] **T04-2** `src/hooks/useEvents.js` を実装する
   - 状態: `events`（`CalendarEvent[]`）
   - `addEvent(event)` — 1日最大 3 件チェック後に追加
   - `updateEvent(id, patch)` — 対象イベントを部分更新
@@ -67,14 +67,14 @@
 
 ## T05 コンポーネント — 骨格
 
-- [ ] **T05-1** `src/main.jsx` を作成する
+- [x] **T05-1** `src/main.jsx` を作成する
   - React DOM レンダリングのエントリポイント
-- [ ] **T05-2** `src/App.jsx` を作成する
+- [x] **T05-2** `src/App.jsx` を作成する
   - `useCalendar` / `useEvents` を呼び出す
   - `Header`, `SettingsPanel`, `CalendarPreview` を配置
   - レイアウト: `flex flex-col lg:flex-row`（上下 / 左右レスポンシブ）
   - `EventDialog` の開閉状態（`dialogDate`, `dialogEvent`）を管理
-- [ ] **T05-3** `src/components/Header.jsx` を作成する
+- [x] **T05-3** `src/components/Header.jsx` を作成する
   - アプリタイトル（「カレンダーメーカー」）を表示
 
 ---
