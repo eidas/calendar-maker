@@ -14,7 +14,7 @@ export default function CalendarCell({ date, isCurrentMonth, isToday, holiday, e
   return (
     <div
       className="border min-h-[72px] p-1 cursor-pointer hover:brightness-95 flex flex-col"
-      style={{ borderColor: theme.gridColor, fontFamily: theme.fontFamily }}
+      style={{ borderColor: theme.gridColor, fontFamily: theme.fontFamily, borderRadius: theme.cellBorderRadius ?? '0' }}
       onClick={() => onClick(toDateStr(year, month, day))}
     >
       {/* 日付番号 */}

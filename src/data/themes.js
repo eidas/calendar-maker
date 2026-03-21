@@ -17,6 +17,7 @@
  * @property {string} holidayColor
  * @property {string} gridColor
  * @property {Object} headerStyle
+ * @property {string} [cellBorderRadius]
  */
 
 /** @type {Record<string, ThemeConfig>} */
@@ -51,6 +52,7 @@ export const THEMES = {
     sundayColor: '#f43f5e',
     holidayColor: '#f43f5e',
     gridColor: '#bae6fd',
+    cellBorderRadius: '6px',
     headerStyle: {
       backgroundColor: '#7dd3fc',
       color: '#0c4a6e',
