@@ -22,7 +22,7 @@ export default function CalendarPreview({ calendar, eventsApi, onCellClick, onEv
   const calendarRef = useRef(null)
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 mx-4 my-2">
       {/* PNG に含まれる部分 */}
       <div
         ref={calendarRef}
