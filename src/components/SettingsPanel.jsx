@@ -27,8 +27,15 @@ const ASPECT_PRESETS = [
   { label: '16:9', w: 16, h: 9 },
 ]
 
+const TITLE_POSITIONS = [
+  { value: 'top',    label: '上' },
+  { value: 'bottom', label: '下' },
+  { value: 'left',   label: '左' },
+  { value: 'right',  label: '右' },
+]
+
 export default function SettingsPanel({ calendar }) {
-  const { year, month, setYear, setMonth, themeKey, theme, prevMonth, nextMonth, applyTemplate, updateTheme, aspectWidth, aspectHeight, setAspectRatio } = calendar
+  const { year, month, setYear, setMonth, themeKey, theme, prevMonth, nextMonth, applyTemplate, updateTheme, aspectWidth, aspectHeight, setAspectRatio, title, setTitle, titlePosition, setTitlePosition, titleSize, setTitleSize } = calendar
 
   const [bgMode, setBgMode] = useState('solid')
 
@@ -82,6 +89,53 @@ export default function SettingsPanel({ calendar }) {
             翌月 ▶
           </button>
         </div>
+      </section>
+
+      {/* タイトル */}
+      <section>
+        <h2 className="font-semibold text-gray-700 mb-2">タイトル</h2>
+        <input
+          type="text"
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+          placeholder="タイトルを入力（任意）"
+          className="w-full border border-gray-300 rounded px-2 py-1 mb-2"
+        />
+        {title && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <label className="text-gray-600 w-16 shrink-0">位置</label>
+              <div className="flex gap-1 flex-wrap">
+                {TITLE_POSITIONS.map(p => (
+                  <button
+                    key={p.value}
+                    onClick={() => setTitlePosition(p.value)}
+                    className={`border rounded px-2 py-0.5 text-xs transition-colors ${
+                      titlePosition === p.value
+                        ? 'border-blue-500 bg-blue-50 text-blue-700 font-semibold'
+                        : 'border-gray-300 hover:bg-gray-50'
+                    }`}
+                  >
+                    {p.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <label className="text-gray-600 w-16 shrink-0">サイズ</label>
+              <input
+                type="range"
+                min={0.5}
+                max={2.0}
+                step={0.1}
+                value={titleSize}
+                onChange={e => setTitleSize(Number(e.target.value))}
+                className="flex-1"
+              />
+              <span className="text-xs text-gray-500 w-8 text-right">{titleSize.toFixed(1)}×</span>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* 縦横比 */}

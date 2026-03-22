@@ -4,19 +4,27 @@ import CalendarCell from './CalendarCell'
 
 const WEEKDAY_LABELS = ['日', '月', '火', '水', '木', '金', '土']
 
-export default function CalendarGrid({ year, month, theme, eventsApi, onCellClick, onEventClick }) {
+export default function CalendarGrid({ year, month, theme, eventsApi, onCellClick, onEventClick, title, titlePosition, titleSize }) {
   const cells = getDaysInMonth(year, month)
   const holidays = getHolidays(year)
   const todayStr = today()
 
   return (
     <div className="h-full flex flex-col">
-      {/* 年月ヘッダー */}
+      {/* 年月ヘッダー（タイトルを含む） */}
       <div
-        className="text-center font-bold"
-        style={{ ...theme.headerStyle, fontFamily: theme.fontFamily, color: theme.headerStyle?.color, fontSize: '1.125em', padding: '0.5em 1em' }}
+        style={{ ...theme.headerStyle, fontFamily: theme.fontFamily, color: theme.headerStyle?.color, padding: '0.5em 1em' }}
+        className={`font-bold flex items-center justify-center ${
+          titlePosition === 'left' || titlePosition === 'right' ? 'flex-row gap-[0.5em]' : 'flex-col gap-[0.15em]'
+        }`}
       >
-        {year}年{month}月
+        {title && (titlePosition === 'top' || titlePosition === 'left') && (
+          <span style={{ fontSize: `${1.125 * titleSize}em` }}>{title}</span>
+        )}
+        <span style={{ fontSize: '1.125em' }}>{year}年{month}月</span>
+        {title && (titlePosition === 'bottom' || titlePosition === 'right') && (
+          <span style={{ fontSize: `${1.125 * titleSize}em` }}>{title}</span>
+        )}
       </div>
 
       {/* 曜日ヘッダー */}
