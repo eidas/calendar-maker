@@ -22,7 +22,8 @@ export default function CalendarPreview({ calendar, eventsApi, onCellClick, onEv
   const calendarRef = useRef(null)
 
   // アスペクト比に合わせたベースフォントサイズ (3:4 を基準=1.0)
-  const scale = (3 * aspectHeight) / (4 * aspectWidth)
+  // セル面積に対するフォント面積を一定にするため √ を使う
+  const scale = Math.sqrt((3 * aspectHeight) / (4 * aspectWidth))
   const baseFontSize = `${Math.round(16 * scale)}px`
 
   return (
