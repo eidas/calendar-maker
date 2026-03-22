@@ -50,7 +50,7 @@ export default function CalendarGrid({ year, month, theme, eventsApi, onCellClic
               holiday={holiday}
               events={events}
               theme={theme}
-              isFirstRow={idx < 7}
+              isLastRow={idx >= cells.length - 7}
               onClick={onCellClick}
               onEventClick={onEventClick}
             />
