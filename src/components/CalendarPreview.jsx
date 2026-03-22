@@ -21,6 +21,10 @@ export default function CalendarPreview({ calendar, eventsApi, onCellClick, onEv
   const { year, month, theme, aspectWidth, aspectHeight } = calendar
   const calendarRef = useRef(null)
 
+  // アスペクト比に合わせたベースフォントサイズ (3:4 を基準=1.0)
+  const scale = (3 * aspectHeight) / (4 * aspectWidth)
+  const baseFontSize = `${Math.round(16 * scale)}px`
+
   return (
     <div className="flex flex-col gap-4 mx-4 my-2">
       {/* PNG に含まれる部分 */}
@@ -28,7 +32,7 @@ export default function CalendarPreview({ calendar, eventsApi, onCellClick, onEv
         <div
           ref={calendarRef}
           className="rounded-lg overflow-hidden shadow border"
-          style={{ ...buildBackgroundStyle(theme), fontFamily: theme.fontFamily, borderColor: theme.gridColor, aspectRatio: `${aspectWidth}/${aspectHeight}` }}
+          style={{ ...buildBackgroundStyle(theme), fontFamily: theme.fontFamily, borderColor: theme.gridColor, aspectRatio: `${aspectWidth}/${aspectHeight}`, fontSize: baseFontSize }}
         >
         <CalendarGrid
           year={year}

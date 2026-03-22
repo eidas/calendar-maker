@@ -13,36 +13,39 @@ export default function CalendarCell({ date, isCurrentMonth, isToday, holiday, e
 
   return (
     <div
-      className={`${weekday !== 6 ? 'border-r' : ''} ${!isLastRow ? 'border-b' : ''} min-h-[72px] p-1 cursor-pointer hover:brightness-95 flex flex-col`}
-      style={{ borderColor: theme.gridColor, fontFamily: theme.fontFamily, borderRadius: theme.cellBorderRadius ?? '0' }}
+      className={`${weekday !== 6 ? 'border-r' : ''} ${!isLastRow ? 'border-b' : ''} cursor-pointer hover:brightness-95 flex flex-col h-full overflow-hidden`}
+      style={{ borderColor: theme.gridColor, fontFamily: theme.fontFamily, borderRadius: theme.cellBorderRadius ?? '0', padding: '0.25em' }}
       onClick={() => onClick(toDateStr(year, month, day))}
     >
       {/* 日付番号 */}
-      <div className="flex items-center gap-1 mb-0.5">
+      <div className="flex items-center gap-1 mb-0.5 flex-shrink-0">
         <span
-          className={`text-xs font-semibold leading-none ${isToday ? 'bg-blue-500 text-white rounded-full w-5 h-5 flex items-center justify-center' : ''}`}
-          style={isToday ? {} : { color: dateColor() }}
+          className={`font-semibold leading-none flex-shrink-0 ${isToday ? 'flex items-center justify-center rounded-full bg-blue-500 text-white' : ''}`}
+          style={{
+            fontSize: '0.75em',
+            ...(isToday ? { width: '1.6em', height: '1.6em' } : { color: dateColor() }),
+          }}
         >
           {day}
         </span>
         {holiday && (
-          <span className="text-[10px] leading-none truncate" style={{ color: theme.holidayColor }}>
+          <span className="leading-none truncate" style={{ color: theme.holidayColor, fontSize: '0.6em' }}>
             {holiday}
           </span>
         )}
       </div>
 
       {/* イベント一覧 */}
-      <div className="flex flex-col gap-0.5 overflow-hidden">
+      <div className="flex flex-col overflow-hidden" style={{ gap: '0.2em' }}>
         {events.map(ev => (
           <div
             key={ev.id}
-            className="flex items-center gap-1 rounded px-1 text-[11px] leading-tight cursor-pointer hover:opacity-75"
-            style={{ backgroundColor: ev.color || '#dbeafe', color: '#1e3a5f' }}
+            className="flex items-center rounded leading-tight cursor-pointer hover:opacity-75 overflow-hidden"
+            style={{ backgroundColor: ev.color || '#dbeafe', color: '#1e3a5f', fontSize: '0.65em', padding: '0.1em 0.3em', gap: '0.3em' }}
             onClick={e => { e.stopPropagation(); onEventClick(ev) }}
           >
             {ev.imageUrl && (
-              <img src={ev.imageUrl} alt="" className="w-4 h-4 object-cover rounded flex-shrink-0" />
+              <img src={ev.imageUrl} alt="" className="object-cover rounded flex-shrink-0" style={{ width: '1.2em', height: '1.2em' }} />
             )}
             {ev.title && <span className="truncate">{ev.title}</span>}
           </div>

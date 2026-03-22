@@ -86,7 +86,7 @@ export default function SettingsPanel({ calendar }) {
 
       {/* 縦横比 */}
       <section>
-        <h2 className="font-semibold text-gray-700 mb-2">縦横比</h2>
+        <h2 className="font-semibold text-gray-700 mb-2">縦横比 (横:縦)</h2>
         <div className="flex flex-wrap gap-2 mb-2">
           {ASPECT_PRESETS.map(p => (
             <button
