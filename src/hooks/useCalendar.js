@@ -7,8 +7,8 @@ export function useCalendar() {
   const [month, setMonth] = useState(now.getMonth() + 1)
   const [themeKey, setThemeKey] = useState(DEFAULT_THEME_KEY)
   const [theme, setTheme] = useState(THEMES[DEFAULT_THEME_KEY])
-  const [aspectWidth, setAspectWidth] = useState(3)
-  const [aspectHeight, setAspectHeight] = useState(4)
+  const [aspectWidth, setAspectWidth] = useState(4)
+  const [aspectHeight, setAspectHeight] = useState(3)
 
   function prevMonth() {
     if (month === 1) {
