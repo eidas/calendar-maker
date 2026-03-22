@@ -1,12 +1,12 @@
 import { getDaysInMonth, toDateStr, today } from '../utils/dateUtils'
-import { getHolidays } from '../data/holidays'
+import { useHolidays } from '../hooks/useHolidays'
 import CalendarCell from './CalendarCell'
 
 const WEEKDAY_LABELS = ['日', '月', '火', '水', '木', '金', '土']
 
 export default function CalendarGrid({ year, month, theme, eventsApi, onCellClick, onEventClick, title, titlePosition, titleSize }) {
   const cells = getDaysInMonth(year, month)
-  const holidays = getHolidays(year)
+  const holidays = useHolidays(year)
   const todayStr = today()
 
   return (
