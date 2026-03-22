@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import CalendarGrid from './CalendarGrid'
 import DownloadButton from './DownloadButton'
 
@@ -20,11 +20,24 @@ function buildBackgroundStyle(theme) {
 export default function CalendarPreview({ calendar, eventsApi, onCellClick, onEventClick }) {
   const { year, month, theme, aspectWidth, aspectHeight } = calendar
   const calendarRef = useRef(null)
+  const [containerWidth, setContainerWidth] = useState(0)
 
-  // アスペクト比に合わせたベースフォントサイズ (3:4 を基準=1.0)
-  // セル面積に対するフォント面積を一定にするため √ を使う
-  const scale = Math.sqrt((3 * aspectHeight) / (4 * aspectWidth))
-  const baseFontSize = `${Math.round(16 * scale)}px`
+  useEffect(() => {
+    if (!calendarRef.current) return
+    const obs = new ResizeObserver(entries => {
+      setContainerWidth(entries[0].contentRect.width)
+    })
+    obs.observe(calendarRef.current)
+    return () => obs.disconnect()
+  }, [])
+
+  // 実際のセルサイズ (7列 × 7行相当) から font-size を決定
+  // 幅・高さの小さい方に合わせることで、縦長・横長どちらでも適切なサイズになる
+  const cellW = containerWidth / 7
+  const cellH = containerWidth * aspectHeight / (aspectWidth * 7)
+  const baseFontSize = containerWidth > 0
+    ? `${Math.min(cellW, cellH) / 6.25}px`
+    : `${Math.round(16 * Math.sqrt((3 * aspectHeight) / (4 * aspectWidth)))}px`
 
   return (
     <div className="flex flex-col gap-4 mx-4 my-2">
