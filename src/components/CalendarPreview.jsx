@@ -18,7 +18,7 @@ function buildBackgroundStyle(theme) {
 }
 
 export default function CalendarPreview({ calendar, eventsApi, onCellClick, onEventClick }) {
-  const { year, month, theme, aspectWidth, aspectHeight } = calendar
+  const { year, month, theme, aspectWidth, aspectHeight, title, titlePosition, titleSize } = calendar
   const calendarRef = useRef(null)
   const [containerWidth, setContainerWidth] = useState(0)
 
@@ -54,6 +54,9 @@ export default function CalendarPreview({ calendar, eventsApi, onCellClick, onEv
           eventsApi={eventsApi}
           onCellClick={onCellClick}
           onEventClick={onEventClick}
+          title={title}
+          titlePosition={titlePosition}
+          titleSize={titleSize}
         />
         </div>
       </div>
