@@ -10,11 +10,11 @@ export default function CalendarGrid({ year, month, theme, eventsApi, onCellClic
   const todayStr = today()
 
   return (
-    <div>
+    <div className="h-full flex flex-col">
       {/* 年月ヘッダー */}
       <div
-        className="px-4 py-3 text-center text-lg font-bold"
-        style={{ ...theme.headerStyle, fontFamily: theme.fontFamily, color: theme.headerStyle?.color }}
+        className="text-center font-bold"
+        style={{ ...theme.headerStyle, fontFamily: theme.fontFamily, color: theme.headerStyle?.color, fontSize: '1.125em', padding: '0.5em 1em' }}
       >
         {year}年{month}月
       </div>
@@ -24,10 +24,12 @@ export default function CalendarGrid({ year, month, theme, eventsApi, onCellClic
         {WEEKDAY_LABELS.map((label, i) => (
           <div
             key={label}
-            className="text-center text-xs py-1 font-medium"
+            className="text-center font-medium"
             style={{
               fontFamily: theme.fontFamily,
               color: i === 0 ? theme.sundayColor : i === 6 ? theme.saturdayColor : theme.textColor,
+              fontSize: '0.75em',
+              padding: '0.25em 0',
             }}
           >
             {label}
@@ -36,7 +38,7 @@ export default function CalendarGrid({ year, month, theme, eventsApi, onCellClic
       </div>
 
       {/* カレンダーグリッド */}
-      <div className="grid grid-cols-7">
+      <div className="grid grid-cols-7 flex-1" style={{ gridTemplateRows: 'repeat(6, 1fr)' }}>
         {cells.map((cell, idx) => {
           const dateStr = toDateStr(cell.year, cell.month, cell.day)
           const holiday = holidays[dateStr]
