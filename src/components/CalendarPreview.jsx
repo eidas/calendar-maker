@@ -18,7 +18,7 @@ function buildBackgroundStyle(theme) {
 }
 
 export default function CalendarPreview({ calendar, eventsApi, onCellClick, onEventClick }) {
-  const { year, month, theme } = calendar
+  const { year, month, theme, aspectWidth, aspectHeight } = calendar
   const calendarRef = useRef(null)
 
   return (
@@ -28,7 +28,7 @@ export default function CalendarPreview({ calendar, eventsApi, onCellClick, onEv
         <div
           ref={calendarRef}
           className="rounded-lg overflow-hidden shadow border"
-          style={{ ...buildBackgroundStyle(theme), fontFamily: theme.fontFamily, borderColor: theme.gridColor }}
+          style={{ ...buildBackgroundStyle(theme), fontFamily: theme.fontFamily, borderColor: theme.gridColor, aspectRatio: `${aspectWidth}/${aspectHeight}` }}
         >
         <CalendarGrid
           year={year}

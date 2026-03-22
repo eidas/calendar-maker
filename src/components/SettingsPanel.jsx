@@ -19,8 +19,16 @@ const GRADIENT_DIRECTIONS = [
   { value: 'to bottom left', label: '↙ 右上→左下' },
 ]
 
+const ASPECT_PRESETS = [
+  { label: '3:4', w: 3, h: 4 },
+  { label: '4:3', w: 4, h: 3 },
+  { label: '1:1', w: 1, h: 1 },
+  { label: '9:16', w: 9, h: 16 },
+  { label: '16:9', w: 16, h: 9 },
+]
+
 export default function SettingsPanel({ calendar }) {
-  const { year, month, setYear, setMonth, themeKey, theme, prevMonth, nextMonth, applyTemplate, updateTheme } = calendar
+  const { year, month, setYear, setMonth, themeKey, theme, prevMonth, nextMonth, applyTemplate, updateTheme, aspectWidth, aspectHeight, setAspectRatio } = calendar
 
   const [bgMode, setBgMode] = useState('solid')
 
@@ -73,6 +81,46 @@ export default function SettingsPanel({ calendar }) {
           >
             翌月 ▶
           </button>
+        </div>
+      </section>
+
+      {/* 縦横比 */}
+      <section>
+        <h2 className="font-semibold text-gray-700 mb-2">縦横比</h2>
+        <div className="flex flex-wrap gap-2 mb-2">
+          {ASPECT_PRESETS.map(p => (
+            <button
+              key={p.label}
+              onClick={() => setAspectRatio(p.w, p.h)}
+              className={`border rounded px-2 py-1 text-xs transition-colors ${
+                aspectWidth === p.w && aspectHeight === p.h
+                  ? 'border-blue-500 bg-blue-50 text-blue-700 font-semibold'
+                  : 'border-gray-300 hover:bg-gray-50'
+              }`}
+            >
+              {p.label}
+            </button>
+          ))}
+        </div>
+        <div className="flex items-center gap-2">
+          <label className="text-gray-600 text-xs">カスタム</label>
+          <input
+            type="number"
+            min={1}
+            max={99}
+            value={aspectWidth}
+            onChange={e => setAspectRatio(Math.max(1, Number(e.target.value)), aspectHeight)}
+            className="w-14 border border-gray-300 rounded px-2 py-1"
+          />
+          <span className="text-gray-500">:</span>
+          <input
+            type="number"
+            min={1}
+            max={99}
+            value={aspectHeight}
+            onChange={e => setAspectRatio(aspectWidth, Math.max(1, Number(e.target.value)))}
+            className="w-14 border border-gray-300 rounded px-2 py-1"
+          />
         </div>
       </section>
 
