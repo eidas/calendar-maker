@@ -7,6 +7,8 @@ export function useCalendar() {
   const [month, setMonth] = useState(now.getMonth() + 1)
   const [themeKey, setThemeKey] = useState(DEFAULT_THEME_KEY)
   const [theme, setTheme] = useState(THEMES[DEFAULT_THEME_KEY])
+  const [aspectWidth, setAspectWidth] = useState(3)
+  const [aspectHeight, setAspectHeight] = useState(4)
 
   function prevMonth() {
     if (month === 1) {
@@ -36,5 +38,10 @@ export function useCalendar() {
     setTheme(prev => ({ ...prev, ...patch }))
   }
 
-  return { year, month, setYear, setMonth, themeKey, theme, prevMonth, nextMonth, applyTemplate, updateTheme }
+  function setAspectRatio(w, h) {
+    setAspectWidth(w)
+    setAspectHeight(h)
+  }
+
+  return { year, month, setYear, setMonth, themeKey, theme, prevMonth, nextMonth, applyTemplate, updateTheme, aspectWidth, aspectHeight, setAspectRatio }
 }
