@@ -27,8 +27,8 @@ export default function CalendarPreview({ calendar, eventsApi, onCellClick, onEv
       <div className="p-2">
         <div
           ref={calendarRef}
-          className="rounded-lg overflow-hidden shadow"
-          style={{ ...buildBackgroundStyle(theme), fontFamily: theme.fontFamily }}
+          className="rounded-lg overflow-hidden shadow border"
+          style={{ ...buildBackgroundStyle(theme), fontFamily: theme.fontFamily, borderColor: theme.gridColor }}
         >
         <CalendarGrid
           year={year}

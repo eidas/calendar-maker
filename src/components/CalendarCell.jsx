@@ -1,6 +1,6 @@
 import { toDateStr } from '../utils/dateUtils'
 
-export default function CalendarCell({ date, isCurrentMonth, isToday, holiday, events, theme, isFirstRow, onClick, onEventClick }) {
+export default function CalendarCell({ date, isCurrentMonth, isToday, holiday, events, theme, isLastRow, onClick, onEventClick }) {
   const { year, month, day } = date
   const weekday = new Date(year, month - 1, day).getDay()
 
@@ -13,7 +13,7 @@ export default function CalendarCell({ date, isCurrentMonth, isToday, holiday, e
 
   return (
     <div
-      className={`border-r border-b${weekday === 0 ? ' border-l' : ''}${isFirstRow ? ' border-t' : ''} min-h-[72px] p-1 cursor-pointer hover:brightness-95 flex flex-col`}
+      className={`${weekday !== 6 ? 'border-r' : ''} ${!isLastRow ? 'border-b' : ''} min-h-[72px] p-1 cursor-pointer hover:brightness-95 flex flex-col`}
       style={{ borderColor: theme.gridColor, fontFamily: theme.fontFamily, borderRadius: theme.cellBorderRadius ?? '0' }}
       onClick={() => onClick(toDateStr(year, month, day))}
     >
