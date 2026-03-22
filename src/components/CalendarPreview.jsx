@@ -34,10 +34,9 @@ export default function CalendarPreview({ calendar, eventsApi, onCellClick, onEv
   // 実際のセルサイズ (7列 × 7行相当) から font-size を決定
   // 幅・高さの小さい方に合わせることで、縦長・横長どちらでも適切なサイズになる
   const cellW = containerWidth / 7
-  const cellH = containerWidth * aspectHeight / (aspectWidth * 7)
   const baseFontSize = containerWidth > 0
-    ? `${Math.min(cellW, cellH) / 6.25}px`
-    : `${Math.round(16 * Math.sqrt((3 * aspectHeight) / (4 * aspectWidth)))}px`
+    ? `${cellW / 6.25}px`
+    : '16px'
 
   return (
     <div className="flex flex-col gap-4 mx-4 my-2">
