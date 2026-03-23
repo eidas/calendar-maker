@@ -28,7 +28,11 @@ function ensureFetched() {
 
 function pickYear(allData, year) {
   const prefix = `${year}-`
-  return Object.fromEntries(Object.entries(allData).filter(([k]) => k.startsWith(prefix)))
+  return Object.fromEntries(
+    Object.entries(allData)
+      .filter(([k]) => k.startsWith(prefix))
+      .map(([k, v]) => [k, v.includes('振替休日') ? '振替休日' : v])
+  )
 }
 
 /**
